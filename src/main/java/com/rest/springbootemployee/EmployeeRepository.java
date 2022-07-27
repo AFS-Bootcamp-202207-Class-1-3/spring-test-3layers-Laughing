@@ -70,4 +70,8 @@ public class EmployeeRepository {
         Employee employee=findById(id);
         employeeRepository.remove(employee);
     }
+
+    public void cleanAll() {
+        employeeRepository.clear();
+    }
 }
