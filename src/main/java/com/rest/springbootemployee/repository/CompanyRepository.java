@@ -2,6 +2,7 @@ package com.rest.springbootemployee.repository;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public class CompanyRepository {
     public Company getCompanyByID(int id) {
         return companyRepository.stream().
                 filter(company -> company.getId()==id).
-                findFirst().get();
+                findFirst()
+                .orElseThrow(CompanyNotFoundException::new);
     }
 
     public List<Employee> getCompanyEmployeesByID(int id) {
@@ -58,10 +60,11 @@ public class CompanyRepository {
                 limit(pageSize).collect(Collectors.toList());
     }
 
-    public Company addCompany(Company company) {
-        company.setId(generateId());
+    public Integer addCompany(Company company) {
+        int newId=generateId();
+        company.setId(newId);
         companyRepository.add(company);
-        return company;
+        return newId;
     }
 
     private int generateId() {
@@ -79,5 +82,9 @@ public class CompanyRepository {
     public void deleteCompany(int id) {
        Company company=getCompanyByID(id);
        companyRepository.remove(company);
+    }
+
+    public void cleanAll() {
+        companyRepository.clear();
     }
 }
