@@ -100,4 +100,25 @@ public class CompanyControllerTest {
                 .andReturn().getResponse().getContentAsString();
         assertEquals(response,"1");
     }
+
+    @Test
+    public void should_return_company_when_put_company_given_id_company() throws Exception {
+        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
+
+        int id = 1;
+        String newCompany = "{\n" +
+                "        \"id\": 1,\n" +
+                "        \"name\": \"cool\",\n" +
+                "        \"employees\": [\n" +
+                "        ]\n" +
+                "    }";
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/companies/" + id)
+                        .contentType(MediaType.APPLICATION_JSON).content(newCompany))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("cool"));
+
+    }
+
+
 }

@@ -28,4 +28,10 @@ public class CompanyService {
     public Integer addCompany(Company company) {
         return companyRepository.addCompany(company);
     }
+
+    public Company update(int id, Company toUpdateCompany) {
+        Company company=companyRepository.getCompanyByID(id);
+        company.merge(toUpdateCompany);
+        return companyRepository.updateCompany(id,company);
+    }
 }
