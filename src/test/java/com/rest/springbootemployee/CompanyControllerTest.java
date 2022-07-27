@@ -129,4 +129,21 @@ public class CompanyControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
+
+    @Test
+    public void should_return_employees_when_get_company_employees_given_company_id() throws Exception {
+        List<Employee> employeeList = new ArrayList<Employee>() {
+            {
+                add(new Employee(1, "Kendrick", 22, "male", 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male", 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female", 20000));
+            }
+        };
+        Company company = new Company(1, "cool", employeeList);
+        companyRepository.addCompany(company);
+        int id=1;
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees",id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*",hasSize(3)));
+    }
 }
