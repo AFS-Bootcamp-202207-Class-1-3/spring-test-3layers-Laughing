@@ -43,10 +43,11 @@ public class EmployeeRepository {
                 collect(Collectors.toList());
     }
 
-    public Employee addAEmployee(Employee employee) {
-        employee.setId(generateMaxId());
+    public Integer addAEmployee(Employee employee) {
+        int newId=generateMaxId();
+        employee.setId(newId);
         employeeRepository.add(employee);
-        return employee;
+        return newId;
     }
 
     private int generateMaxId() {

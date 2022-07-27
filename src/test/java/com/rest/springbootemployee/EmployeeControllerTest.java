@@ -44,8 +44,8 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void should_create_new_employee_when_perform_post_given_new_employee() throws Exception {
-        String newEmployee="{\n" +
+    public void should_return_new_employeeId_when_perform_post_given_new_employee() throws Exception {
+        String newEmployee = "{\n" +
                 "                \"id\": 2,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +
                 "                \"age\": 12,\n" +
@@ -53,13 +53,11 @@ public class EmployeeControllerTest {
                 "                \"salary\": 30000\n" +
                 "            }";
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
-                .contentType(MediaType.APPLICATION_JSON).content(newEmployee))
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/employees")
+                        .contentType(MediaType.APPLICATION_JSON).content(newEmployee))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Kendraxxxxick"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(12))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(30000));
+                .andReturn().getResponse().getContentAsString();
+        assertEquals(response,"1");
     }
 
     @Test
@@ -78,10 +76,10 @@ public class EmployeeControllerTest {
     @Test
     public void should_return_employeeNotFoundException_when_getEmployeeByID_given_not_found_id() throws Exception {
 
-             mockMvc.perform(MockMvcRequestBuilders.get("/employees/1"))
-                     .andExpect(MockMvcResultMatchers.status().isInternalServerError())
-                     .andExpect(result -> assertTrue(result.getResolvedException() instanceof EmployeeNotFoundException))
-                    .andExpect(result -> assertEquals("employee not found", result.getResolvedException().getMessage()));
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof EmployeeNotFoundException))
+                .andExpect(result -> assertEquals("employee not found", result.getResolvedException().getMessage()));
 
     }
 
@@ -89,8 +87,8 @@ public class EmployeeControllerTest {
     public void should_return_employee_when_put_employee_given_id_employee() throws Exception {
         employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
 
-        int id=1;
-        String employee="{\n" +
+        int id = 1;
+        String employee = "{\n" +
                 "                \"id\": 1,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +
                 "                \"age\": 12,\n" +
@@ -98,7 +96,7 @@ public class EmployeeControllerTest {
                 "                \"salary\": 9999\n" +
                 "            }";
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/employees/"+id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/" + id)
                         .contentType(MediaType.APPLICATION_JSON).content(employee))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Kendraxxxxick"))
@@ -112,8 +110,8 @@ public class EmployeeControllerTest {
     public void should_return_employee_not_found_exception_when_put_not_found_id_employee() throws Exception {
         employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
 
-        int id=2;
-        String employee="{\n" +
+        int id = 2;
+        String employee = "{\n" +
                 "                \"id\": 1,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +
                 "                \"age\": 12,\n" +
@@ -121,21 +119,30 @@ public class EmployeeControllerTest {
                 "                \"salary\": 9999\n" +
                 "            }";
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}",id))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof EmployeeNotFoundException))
                 .andExpect(result -> assertEquals("employee not found", result.getResolvedException().getMessage()));
     }
 
     @Test
-    public void should_return_nothing_when_delete_employee_given_id() throws Exception {
+    public void should_return_is_no_content_when_delete_employee_given_id() throws Exception {
 
-        int id=1;
+        int id = 1;
         employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}",id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
+    @Test
+    public void should_return_employees_by_page_when_getEmployees_by_page() throws Exception {
+        employeeRepository.addAEmployee(new Employee(1, "Kendrick", 22, "male", 20000));
+        employeeRepository.addAEmployee(new Employee(2, "Kendrick", 12, "female", 20500));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees?page=1&pageSize=1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(1)));
+    }
 
 }

@@ -74,4 +74,10 @@ public class EmployeeServiceTest {
         assertThat(employee,equalTo(employee2));
 
     }
+    @Test
+    public void should_return_employee_when_create_employee_given_new_employee(){
+        Employee employee = new Employee(0, "Kendrick", 22, "male", 20000);
+
+
+    }
 }
