@@ -14,9 +14,6 @@ import java.util.List;
 @RequestMapping("companies")
 public class CompanyController {
     @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
     private CompanyService companyService;
 
     @GetMapping
@@ -26,33 +23,33 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public Company getCompanyById(@PathVariable Integer id){
-        return companyRepository.getCompanyByID(id);
+        return companyService.getCompanyByID(id);
     }
 
     @GetMapping("/{id}/employees")
     public List<Employee> getCompanyEmployeesByCompanyId(@PathVariable Integer id){
-        return companyRepository.getCompanyEmployeesByID(id);
+        return companyService.getCompanyEmployeesByID(id);
     }
 
     @GetMapping(params = {"page","pageSize"})
     public List<Company> getCompaniesByPage(Integer page, Integer pageSize){
-        return companyRepository.getCompaniesByPage(page, pageSize);
+        return companyService.getCompanyByPage(page, pageSize);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Integer addCompany(@RequestBody Company company){
-        return companyRepository.addCompany(company);
+        return companyService.addCompany(company);
     }
 
     @PutMapping("/{id}")
     public Company updateCompany(@PathVariable Integer id, @RequestBody Company company){
-        return companyRepository.updateCompany(id,company);
+        return companyService.update(id,company);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable Integer id){
-        companyRepository.deleteCompany(id);
+        companyService.deleteCompany(id);
     }
 }
