@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 
@@ -44,5 +45,26 @@ public class CompanyServiceTest {
         List<Company> companies = companyService.getAllCompanies();
 
         assertThat(companies, hasSize(1));
+    }
+
+
+    @Test
+    public void should_return_company_when_get_company_by_id_given_id() {
+        int id = 1;
+        List<Employee> employeeList = new ArrayList<Employee>() {
+            {
+                add(new Employee(1, "Kendrick", 22, "male", 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male", 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female", 20000));
+            }
+        };
+        Company company = new Company(id, "cool", employeeList);
+
+        given(companyRepository.getCompanyByID(id)).willReturn(company);
+
+       Company findCompany=companyService.getCompanyByID(id);
+
+        assertThat(company, equalTo(findCompany));
+
     }
 }

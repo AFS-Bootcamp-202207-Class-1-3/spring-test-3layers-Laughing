@@ -63,9 +63,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employee_when_get_employee_by_id_given_id() {
         int id = 1;
-        Employee employee = new Employee(1, "Kendrick", 22, "male", 20000);
-        List<Employee> employeeList = new ArrayList<>();
-        employeeList.add(employee);
+        Employee employee = new Employee(id, "Kendrick", 22, "male", 20000);
 
         given(employeeRepository.findById(id)).willReturn(employee);
 

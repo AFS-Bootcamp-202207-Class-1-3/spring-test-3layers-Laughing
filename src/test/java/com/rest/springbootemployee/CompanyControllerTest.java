@@ -49,4 +49,14 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("cool"));
     }
+
+    @Test
+    public void should_return_company_when_getCompanyByID_given_id() throws Exception {
+        companyRepository.addCompany(new Company(1, "cool",new ArrayList<Employee>()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("cool"));
+    }
 }
