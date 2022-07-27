@@ -61,5 +61,6 @@ class Employee{
         this.name=employee.getName();
         this.age=employee.getAge();
         this.gender=employee.getGender();
+        this.salary=employee.getSalary();
     }
 }
