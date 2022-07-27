@@ -73,4 +73,14 @@ public class CompanyControllerTest {
                 .andExpect(result -> assertEquals("company not found", result.getResolvedException().getMessage()));
 
     }
+
+    @Test
+    public void should_return_companies_by_page_when_getCompanies_by_page() throws Exception {
+        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
+        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies?page=1&pageSize=1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(1)));
+    }
 }

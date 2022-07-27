@@ -20,4 +20,8 @@ public class CompanyService {
     public Company getCompanyByID(int id) {
         return companyRepository.getCompanyByID(id);
     }
+
+    public List<Company> getCompanyByPage(int page, int pageSize) {
+        return companyRepository.getCompaniesByPage(page,pageSize);
+    }
 }

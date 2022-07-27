@@ -67,4 +67,17 @@ public class CompanyServiceTest {
         assertThat(company, equalTo(findCompany));
 
     }
+
+    @Test
+    public void should_return_companies_by_page_when_getCompanies_by_page() {
+        Company company = new Company(1, "cool", new ArrayList<>());
+        List<Company> companyList = new ArrayList<>();
+        companyList.add(company);
+        int page = 1, pageSize = 1;
+        given(companyRepository.getCompaniesByPage(page,pageSize)).willReturn(companyList);
+
+        List<Company> companies = companyService.getCompanyByPage(page,pageSize);
+
+        assertThat(companies.get(0),equalTo(company) );
+    }
 }
