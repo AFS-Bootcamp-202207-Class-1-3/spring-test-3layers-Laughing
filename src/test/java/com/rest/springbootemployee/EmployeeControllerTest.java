@@ -1,5 +1,6 @@
 package com.rest.springbootemployee;
 
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -69,6 +72,16 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(20000))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(22));
+    }
+
+    @Test
+    public void should_return_employeeNotFoundException_when_getEmployeeByID_given_not_found_id() throws Exception {
+
+             mockMvc.perform(MockMvcRequestBuilders.get("/employees/1"))
+                     .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                     .andExpect(result -> assertTrue(result.getResolvedException() instanceof EmployeeNotFoundException))
+                    .andExpect(result -> assertEquals("employee not found", result.getResolvedException().getMessage()));
+
     }
 
 }
