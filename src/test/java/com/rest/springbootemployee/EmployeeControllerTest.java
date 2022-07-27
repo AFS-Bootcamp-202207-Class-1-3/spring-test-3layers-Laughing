@@ -126,6 +126,16 @@ public class EmployeeControllerTest {
                 .andExpect(result -> assertEquals("employee not found", result.getResolvedException().getMessage()));
     }
 
+    @Test
+    public void should_return_nothing_when_delete_employee_given_id() throws Exception {
+
+        int id=1;
+        employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}",id))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
 
 
 }
