@@ -83,4 +83,18 @@ public class EmployeeServiceTest {
         int newId=employeeService.addAEmployee(employee);
         assertThat(newId,equalTo(resultId));
     }
+
+    @Test
+    public void should_return_employee_when_getEmployeeByGender_given_gender(){
+        Employee employee = new Employee(0, "Kendrick", 22, "male", 20000);
+        List<Employee> employees=new ArrayList<>();
+        employees.add(employee);
+        String gender="male";
+        given(employeeRepository.getEmployeesByGender(gender)).willReturn(employees);
+
+        List<Employee> employeeList = employeeService.getEmployeesByGender(gender);
+
+        assertThat(employeeList, hasSize(1));
+        assertThat(employeeList.get(0).getGender(),equalTo(gender));
+    }
 }

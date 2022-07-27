@@ -30,4 +30,8 @@ public class EmployeeService {
     public Integer addAEmployee(Employee employee) {
         return employeeRepository.addAEmployee(employee);
     }
+
+    public List<Employee> getEmployeesByGender(String gender) {
+        return employeeRepository.getEmployeesByGender(gender);
+    }
 }
