@@ -80,4 +80,14 @@ public class CompanyServiceTest {
 
         assertThat(companies.get(0),equalTo(company) );
     }
+
+    @Test
+    public void should_return_companyID_when_create_company_given_new_company() {
+        Company company = new Company(0, "cool", new ArrayList<>());
+        int resultId = 1;
+        given(companyRepository.addCompany(company)).willReturn(resultId);
+
+        int newId = companyService.addCompany(company);
+        assertThat(newId, equalTo(resultId));
+    }
 }

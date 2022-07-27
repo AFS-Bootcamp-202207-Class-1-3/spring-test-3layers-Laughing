@@ -24,4 +24,8 @@ public class CompanyService {
     public List<Company> getCompanyByPage(int page, int pageSize) {
         return companyRepository.getCompaniesByPage(page,pageSize);
     }
+
+    public Integer addCompany(Company company) {
+        return companyRepository.addCompany(company);
+    }
 }
