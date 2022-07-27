@@ -107,6 +107,25 @@ public class EmployeeControllerTest {
 
     }
 
+    @Test
+    public void should_return_employee_not_found_exception_when_put_not_found_id_employee() throws Exception {
+        employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
+
+        int id=2;
+        String employee="{\n" +
+                "                \"id\": 1,\n" +
+                "                \"name\": \"Kendraxxxxick\",\n" +
+                "                \"age\": 12,\n" +
+                "                \"gender\": \"male\",\n" +
+                "                \"salary\": 9999\n" +
+                "            }";
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}",id))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof EmployeeNotFoundException))
+                .andExpect(result -> assertEquals("employee not found", result.getResolvedException().getMessage()));
+    }
+
 
 
 }
