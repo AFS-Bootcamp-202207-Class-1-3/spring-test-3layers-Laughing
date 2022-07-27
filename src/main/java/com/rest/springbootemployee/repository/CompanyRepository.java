@@ -1,5 +1,7 @@
-package com.rest.springbootemployee;
+package com.rest.springbootemployee.repository;
 
+import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.entity.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

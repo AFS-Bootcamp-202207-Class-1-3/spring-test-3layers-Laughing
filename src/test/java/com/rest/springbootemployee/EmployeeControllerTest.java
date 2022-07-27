@@ -1,6 +1,7 @@
 package com.rest.springbootemployee;
 
-import org.assertj.core.api.Assert;
+import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -135,7 +135,6 @@ public class EmployeeControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}",id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
-
 
 
 }
