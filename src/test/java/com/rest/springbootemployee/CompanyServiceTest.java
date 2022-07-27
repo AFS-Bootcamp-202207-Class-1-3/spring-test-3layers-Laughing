@@ -41,7 +41,7 @@ public class CompanyServiceTest {
 
         given(companyRepository.getAllCompanies()).willReturn(companyList);
 
-        List<Company> companies = companyService.getAllEmployee();
+        List<Company> companies = companyService.getAllCompanies();
 
         assertThat(companies, hasSize(1));
     }

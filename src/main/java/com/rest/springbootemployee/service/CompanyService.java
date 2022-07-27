@@ -13,7 +13,7 @@ public class CompanyService {
     @Autowired
     CompanyRepository companyRepository;
 
-    public List<Company> getAllEmployee() {
+    public List<Company> getAllCompanies() {
         return companyRepository.getAllCompanies();
     }
 }
