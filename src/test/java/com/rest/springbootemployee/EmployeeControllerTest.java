@@ -1,6 +1,7 @@
 package com.rest.springbootemployee;
 
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.EmployeeNotFoundException;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
