@@ -34,4 +34,8 @@ public class CompanyService {
         company.merge(toUpdateCompany);
         return companyRepository.updateCompany(id,company);
     }
+
+    public void deleteCompany(int id) {
+        companyRepository.deleteCompany(id);
+    }
 }

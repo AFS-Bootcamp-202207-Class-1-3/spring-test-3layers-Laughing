@@ -108,4 +108,11 @@ public class CompanyServiceTest {
         verify(companyRepository).updateCompany(1, originCompany);
 
     }
+
+    @Test
+    public void should_return_is_no_content_when_delete_company_given_id(){
+        int id=1;
+        companyService.deleteCompany(id);
+        verify(companyRepository).deleteCompany(id);
+    }
 }
