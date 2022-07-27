@@ -13,4 +13,10 @@ public class EmployeeService {
     public List<Employee> getAllEmployee() {
         return employeeRepository.getAllEmployee();
     }
+
+    public Employee update(int id, Employee toUpdateEmployee) {
+        Employee employee = employeeRepository.findById(id);
+        employee.setSalary(toUpdateEmployee.getSalary());
+        return employeeRepository.updateEmployee(1, employee);
+    }
 }

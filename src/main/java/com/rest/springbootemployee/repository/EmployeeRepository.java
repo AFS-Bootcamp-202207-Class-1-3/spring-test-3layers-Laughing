@@ -63,9 +63,7 @@ public class EmployeeRepository {
     }
 
     public Employee updateEmployee(int id, Employee employee) {
-        Employee updateEmployee = this.findById(id);
-        updateEmployee.merge(employee);
-        return updateEmployee;
+        return employee;
     }
 
     public void deleteEmployee(int id) {
