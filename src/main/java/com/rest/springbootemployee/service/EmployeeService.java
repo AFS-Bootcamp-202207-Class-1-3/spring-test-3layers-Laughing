@@ -26,4 +26,8 @@ public class EmployeeService {
         employee.merge(toUpdateEmployee);
         return employeeRepository.updateEmployee(1, employee);
     }
+
+    public Integer addAEmployee(Employee employee) {
+        return employeeRepository.addAEmployee(employee);
+    }
 }

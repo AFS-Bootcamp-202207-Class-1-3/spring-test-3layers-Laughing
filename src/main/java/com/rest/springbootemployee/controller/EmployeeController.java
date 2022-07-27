@@ -37,7 +37,7 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Integer addAEmployee(@RequestBody Employee employee){
-        return employeeRepository.addAEmployee(employee);
+        return employeeService.addAEmployee(employee);
     }
 
     @GetMapping(params = {"page","pageSize"})
