@@ -145,4 +145,13 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(1)));
     }
 
+    @Test
+    public void should_return_employee_when_getEmployeeByGender_given_gender() throws Exception {
+        employeeRepository.addAEmployee(new Employee(1, "Kendrick", 22, "male", 20000));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=male"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*",hasSize(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"));
+    }
 }
