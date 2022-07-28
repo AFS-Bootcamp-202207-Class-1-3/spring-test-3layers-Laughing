@@ -6,10 +6,13 @@ import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -19,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class EmployeeControllerTest {
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -68,7 +72,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_when_getEmployeeByID_given_id() throws Exception {
-        employeeRepository.addAEmployee(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -153,7 +157,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_when_getEmployeeByGender_given_gender() throws Exception {
-        employeeRepository.addAEmployee(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=male"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

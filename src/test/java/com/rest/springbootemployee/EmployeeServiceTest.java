@@ -12,10 +12,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QPageRequest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -25,6 +27,7 @@ import static org.mockito.Mockito.verify;
 
 
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles("test")
 public class EmployeeServiceTest {
 
     //    @Mock
@@ -72,7 +75,7 @@ public class EmployeeServiceTest {
         int id = 1;
         Employee employee = new Employee(id, "Kendrick", 22, "male", 20000);
 
-        given(employeeRepository.findById(id)).willReturn(employee);
+        given(jpaEmployeeRepository.findById(id)).willReturn(Optional.of(employee));
 
         Employee employee2 = employeeService.findByID(id);
 
@@ -96,7 +99,7 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(employee);
         String gender = "male";
-        given(employeeRepository.getEmployeesByGender(gender)).willReturn(employees);
+        given(jpaEmployeeRepository.getByGender(gender)).willReturn(employees);
 
         List<Employee> employeeList = employeeService.getEmployeesByGender(gender);
 
