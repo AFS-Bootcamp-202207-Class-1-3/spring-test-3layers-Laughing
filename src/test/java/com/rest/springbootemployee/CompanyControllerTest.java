@@ -83,7 +83,7 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void should_return_new_companyId_when_perform_post_given_new_company() throws Exception {
+    public void should_return_new_company_when_perform_post_given_new_company() throws Exception {
         String newCompany = "{\n" +
                 "        \"id\": 1,\n" +
                 "        \"name\": \"cool\",\n" +
@@ -91,11 +91,11 @@ public class CompanyControllerTest {
                 "        ]\n" +
                 "    }";
 
-        String response = mockMvc.perform(MockMvcRequestBuilders.post("/companies")
+        mockMvc.perform(MockMvcRequestBuilders.post("/companies")
                         .contentType(MediaType.APPLICATION_JSON).content(newCompany))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andReturn().getResponse().getContentAsString();
-        assertEquals(response,"1");
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("cool"));
+
     }
 
     @Test

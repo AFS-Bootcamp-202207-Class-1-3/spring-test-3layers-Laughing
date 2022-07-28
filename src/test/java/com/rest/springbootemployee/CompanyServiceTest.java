@@ -86,12 +86,12 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void should_return_companyID_when_create_company_given_new_company() {
-        Company company = new Company(0, "cool", new ArrayList<>());
+    public void should_return_company_when_create_company_given_new_company() {
+        Company company = new Company(1, "cool", new ArrayList<>());
         int resultId = 1;
-        given(companyRepository.addCompany(company)).willReturn(resultId);
+        given(jpaCompanyRepository.save(company)).willReturn(company);
 
-        int newId = companyService.addCompany(company);
+        int newId = companyService.addCompany(company).getId();
         assertThat(newId, equalTo(resultId));
     }
 

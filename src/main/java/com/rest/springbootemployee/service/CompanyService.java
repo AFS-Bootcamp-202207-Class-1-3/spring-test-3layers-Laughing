@@ -32,8 +32,8 @@ public class CompanyService {
         return jpaCompanyRepository.findAll(PageRequest.of(page,pageSize)).toList();
     }
 
-    public Integer addCompany(Company company) {
-        return companyRepository.addCompany(company);
+    public Company addCompany(Company company) {
+        return jpaCompanyRepository.save(company);
     }
 
     public Company update(int id, Company toUpdateCompany) {
