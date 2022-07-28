@@ -1,8 +1,12 @@
 package com.rest.springbootemployee;
 
+import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.EmployeeNotFoundException;
+import com.rest.springbootemployee.repository.JpaCompanyRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +32,20 @@ public class EmployeeControllerTest {
     @Autowired
     private JpaEmployeeRepository jpaEmployeeRepository;
 
+    @Autowired
+    private JpaCompanyRepository jpaCompanyRepository;
+
+    private static int companyId=0;
+
     @BeforeEach
     public void cleanDB() {
         jpaEmployeeRepository.deleteAll();
         jpaEmployeeRepository.flush();
+        if(companyId==0){
+            Company company=new Company();
+            company.setName("cool");
+            companyId=jpaCompanyRepository.save(company).getId();
+        }
     }
 
     @Test
@@ -54,7 +68,7 @@ public class EmployeeControllerTest {
         String newEmployee = "{\n" +
                 "                \"id\": 2,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +
-                "                \"age\": 12,\n" +
+                "                \"companyId\": 1,\n" +
                 "                \"gender\": \"male\",\n" +
                 "                \"salary\": 30000\n" +
                 "            }";

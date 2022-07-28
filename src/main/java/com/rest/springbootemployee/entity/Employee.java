@@ -78,4 +78,12 @@ public class Employee{
         this.gender=employee.getGender();
         this.salary=employee.getSalary();
     }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
 }
