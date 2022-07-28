@@ -2,6 +2,7 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.repository.JpaCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CompanyService {
     }
 
     public Company getCompanyByID(int id) {
-        return companyRepository.getCompanyByID(id);
+        return jpaCompanyRepository.findById(id).orElseThrow(CompanyNotFoundException::new);
     }
 
     public List<Company> getCompanyByPage(int page, int pageSize) {
