@@ -85,12 +85,11 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_return_employee_when_create_employee_given_new_employee() {
-        Employee employee = new Employee(0, "Kendrick", 22, "male", 20000);
-        int resultId = 1;
-        given(employeeRepository.addAEmployee(employee)).willReturn(resultId);
+        Employee employee = new Employee(1, "Kendrick", 22, "male", 20000);
+        given(jpaEmployeeRepository.save(employee)).willReturn(employee);
 
-        int newId = employeeService.addAEmployee(employee);
-        assertThat(newId, equalTo(resultId));
+        Employee employee2 = employeeService.addAEmployee(employee);
+        assertThat(employee, equalTo(employee2));
     }
 
     @Test

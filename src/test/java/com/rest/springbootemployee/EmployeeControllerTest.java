@@ -54,7 +54,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void should_return_new_employeeId_when_perform_post_given_new_employee() throws Exception {
+    public void should_return_new_employee_when_perform_post_given_new_employee() throws Exception {
         String newEmployee = "{\n" +
                 "                \"id\": 2,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +
@@ -63,11 +63,11 @@ public class EmployeeControllerTest {
                 "                \"salary\": 30000\n" +
                 "            }";
 
-        String response = mockMvc.perform(MockMvcRequestBuilders.post("/employees")
+        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
                         .contentType(MediaType.APPLICATION_JSON).content(newEmployee))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andReturn().getResponse().getContentAsString();
-        assertEquals(response,"1");
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Kendraxxxxick"));
+
     }
 
     @Test

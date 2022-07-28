@@ -33,7 +33,7 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer addAEmployee(@RequestBody Employee employee){
+    public Employee addAEmployee(@RequestBody Employee employee){
         return employeeService.addAEmployee(employee);
     }
 

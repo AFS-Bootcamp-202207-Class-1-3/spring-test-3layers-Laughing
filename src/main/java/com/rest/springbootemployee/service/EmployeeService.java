@@ -33,8 +33,8 @@ public class EmployeeService {
         return employeeRepository.updateEmployee(1, employee);
     }
 
-    public Integer addAEmployee(Employee employee) {
-        return employeeRepository.addAEmployee(employee);
+    public Employee addAEmployee(Employee employee) {
+        return jpaEmployeeRepository.save(employee);
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
