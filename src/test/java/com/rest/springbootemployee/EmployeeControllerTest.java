@@ -24,8 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class EmployeeControllerTest {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -34,7 +33,6 @@ public class EmployeeControllerTest {
 
     @BeforeEach
     public void cleanDB() {
-        employeeRepository.cleanAll();
         jpaEmployeeRepository.deleteAll();
     }
 
@@ -95,7 +93,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_when_put_employee_given_id_employee() throws Exception {
-        employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
 
         int id = 1;
         String employee = "{\n" +
@@ -118,9 +116,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_not_found_exception_when_put_not_found_id_employee() throws Exception {
-        employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
 
-        int id = 2;
+        int id = 1;
         String employee = "{\n" +
                 "                \"id\": 1,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +

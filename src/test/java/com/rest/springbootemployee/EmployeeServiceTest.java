@@ -1,7 +1,6 @@
 package com.rest.springbootemployee;
 
 import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import com.rest.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import org.mockito.Mock;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -29,10 +27,6 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class EmployeeServiceTest {
-
-    //    @Mock
-    @Mock
-    private EmployeeRepository employeeRepository;
 
     @InjectMocks
     private EmployeeService employeeService;
@@ -60,13 +54,11 @@ public class EmployeeServiceTest {
         Employee originEmployee = new Employee(1, "laughing", 22, "male", 80000);
         Employee toUpdateEmployee = new Employee(1, "laughing", 22, "male", newSalary);
 
-        given(employeeRepository.findById(1)).willReturn(originEmployee);
+        given(jpaEmployeeRepository.findById(1)).willReturn(Optional.of(originEmployee));
 
-        given(employeeRepository.updateEmployee(1, toUpdateEmployee)).willCallRealMethod();
+        employeeService.update(1, toUpdateEmployee);
 
-        Employee updateEmployee = employeeService.update(1, toUpdateEmployee);
-
-        verify(employeeRepository).updateEmployee(1, originEmployee);
+        verify(jpaEmployeeRepository).save(originEmployee);
 
     }
 

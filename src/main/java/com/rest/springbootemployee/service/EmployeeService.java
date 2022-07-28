@@ -14,9 +14,6 @@ import java.util.List;
 public class EmployeeService {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
     private JpaEmployeeRepository jpaEmployeeRepository;
 
     public Employee findByID(int id) {
@@ -28,9 +25,9 @@ public class EmployeeService {
     }
 
     public Employee update(int id, Employee toUpdateEmployee) {
-        Employee employee = employeeRepository.findById(id);
+        Employee employee = jpaEmployeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
         employee.merge(toUpdateEmployee);
-        return employeeRepository.updateEmployee(1, employee);
+        return jpaEmployeeRepository.save(employee);
     }
 
     public Employee addAEmployee(Employee employee) {
