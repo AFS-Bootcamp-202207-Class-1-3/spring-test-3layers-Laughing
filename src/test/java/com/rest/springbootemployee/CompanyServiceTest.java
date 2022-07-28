@@ -28,8 +28,6 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class CompanyServiceTest {
-    @Spy
-    private CompanyRepository companyRepository;
 
     @Mock
     private JpaCompanyRepository jpaCompanyRepository;
@@ -128,7 +126,7 @@ public class CompanyServiceTest {
             }
         };
 
-        given(companyRepository.getCompanyEmployeesByID(companyID)).willReturn(employeeList);
+        given(jpaCompanyRepository.getEmployeesByCompanyId(companyID)).willReturn(employeeList);
         List<Employee> employees = companyService.getCompanyEmployeesByID(companyID);
 
         assertThat(employees, hasSize(3));

@@ -5,6 +5,7 @@ import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.repository.JpaCompanyRepository;
+import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,14 +30,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 public class CompanyControllerTest {
     @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private JpaCompanyRepository jpaCompanyRepository;
+    @Autowired
+    private JpaEmployeeRepository jpaEmployeeRepository;
 
     @BeforeEach
     public void cleanDB() {
+        jpaEmployeeRepository.deleteAll();
         jpaCompanyRepository.deleteAll();
     }
 
@@ -127,18 +129,12 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_employees_when_get_company_employees_given_company_id() throws Exception {
-        List<Employee> employeeList = new ArrayList<Employee>() {
-            {
-                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
-            }
-        };
-        Company company = new Company(1, "cool", employeeList);
-        companyRepository.addCompany(company);
-        int id=1;
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees",id))
+
+        Company company = new Company(1, "cool", new ArrayList<>());
+        Company newCompany=jpaCompanyRepository.save(company);
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male",newCompany.getId(), 20000));
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees",newCompany.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.*",hasSize(3)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*",hasSize(1)));
     }
 }

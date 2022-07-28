@@ -14,8 +14,6 @@ import java.util.List;
 @Service
 public class CompanyService {
 
-    @Autowired
-    CompanyRepository companyRepository;
 
     @Autowired
     JpaCompanyRepository jpaCompanyRepository;
@@ -47,6 +45,6 @@ public class CompanyService {
     }
 
     public List<Employee> getCompanyEmployeesByID(int companyID) {
-        return companyRepository.getCompanyEmployeesByID(companyID);
+        return jpaCompanyRepository.getEmployeesByCompanyId(companyID);
     }
 }
