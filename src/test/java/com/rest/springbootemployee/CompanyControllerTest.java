@@ -118,8 +118,8 @@ public class CompanyControllerTest {
     @Test
     public void should_return_is_no_content_when_delete_company_given_id() throws Exception {
 
-        int id = 1;
-        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
+
+        int id=jpaCompanyRepository.save(new Company(1, "cool", new ArrayList<>())).getId();
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());

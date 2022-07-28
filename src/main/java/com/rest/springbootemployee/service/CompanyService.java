@@ -43,7 +43,7 @@ public class CompanyService {
     }
 
     public void deleteCompany(int id) {
-        companyRepository.deleteCompany(id);
+        jpaCompanyRepository.deleteById(id);
     }
 
     public List<Employee> getCompanyEmployeesByID(int companyID) {
