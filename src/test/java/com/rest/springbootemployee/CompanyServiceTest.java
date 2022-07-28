@@ -3,10 +3,12 @@ package com.rest.springbootemployee;
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.CompanyRepository;
+import com.rest.springbootemployee.repository.JpaCompanyRepository;
 import com.rest.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,6 +26,8 @@ public class CompanyServiceTest {
     @Spy
     private CompanyRepository companyRepository;
 
+    @Mock
+    private JpaCompanyRepository jpaCompanyRepository;
     @InjectMocks
     private CompanyService companyService;
 
@@ -41,7 +45,7 @@ public class CompanyServiceTest {
         List<Company> companyList = new ArrayList<>();
         companyList.add(company);
 
-        given(companyRepository.getAllCompanies()).willReturn(companyList);
+        given(jpaCompanyRepository.findAll()).willReturn(companyList);
 
         List<Company> companies = companyService.getAllCompanies();
 

@@ -4,8 +4,10 @@ import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import com.rest.springbootemployee.repository.CompanyRepository;
+import com.rest.springbootemployee.repository.JpaCompanyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,23 +30,18 @@ public class CompanyControllerTest {
     private CompanyRepository companyRepository;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private JpaCompanyRepository jpaCompanyRepository;
 
     @BeforeEach
     public void cleanDB() {
-        companyRepository.cleanAll();
+        jpaCompanyRepository.deleteAll();
     }
 
     @Test
     public void should_return_all_companies_when_find_all_given_companies() throws Exception {
-        List<Employee> employeeList = new ArrayList<Employee>() {
-            {
-                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
-            }
-        };
-        Company company = new Company(1, "cool", employeeList);
-        companyRepository.addCompany(company);
+        Company company = new Company(1, "cool", new ArrayList<>());
+        jpaCompanyRepository.save(company);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
