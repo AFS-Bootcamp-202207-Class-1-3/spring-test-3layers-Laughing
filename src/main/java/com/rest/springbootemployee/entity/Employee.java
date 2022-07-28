@@ -16,7 +16,18 @@ public class Employee{
     private int age;
     private String gender;
 
+    private int companyId;
+
     public Employee() {
+    }
+
+    public Employee(int id, String name, int age, String gender, int companyId, int salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.companyId = companyId;
+        this.salary = salary;
     }
 
     public void setId(int id) {
@@ -60,14 +71,6 @@ public class Employee{
     }
 
     private int salary;
-
-    public Employee(int id, String name, int age, String gender, int salary) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
-    }
 
     public void merge(Employee employee) {
         this.name=employee.getName();

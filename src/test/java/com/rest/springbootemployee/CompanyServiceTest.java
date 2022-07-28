@@ -32,9 +32,9 @@ public class CompanyServiceTest {
 
         List<Employee> employeeList = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male", 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male", 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female", 20000));
+                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
             }
         };
         Company company = new Company(1, "cool", employeeList);
@@ -54,9 +54,9 @@ public class CompanyServiceTest {
         int id = 1;
         List<Employee> employeeList = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male", 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male", 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female", 20000));
+                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
             }
         };
         Company company = new Company(id, "cool", employeeList);
@@ -121,9 +121,9 @@ public class CompanyServiceTest {
         int companyID=1;
         List<Employee> employeeList = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male", 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male", 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female", 20000));
+                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
             }
         };
 

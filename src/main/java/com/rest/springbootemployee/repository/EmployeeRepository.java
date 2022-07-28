@@ -16,12 +16,12 @@ public class EmployeeRepository {
     public EmployeeRepository() {
         employeeRepository = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male", 20000));
-                add(new Employee(2, "Kendrick", 22, "male", 20000));
-                add(new Employee(3, "Kendrick", 22, "female", 20000));
-                add(new Employee(4, "Kendrick", 22, "male", 50000));
-                add(new Employee(5, "Kendrick", 22, "female", 30000));
-                add(new Employee(6, "Kendrick", 22, "male", 20000));
+                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(2, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(3, "Kendrick", 22, "female",1, 20000));
+                add(new Employee(4, "Kendrick", 22, "male",1, 50000));
+                add(new Employee(5, "Kendrick", 22, "female",1, 30000));
+                add(new Employee(6, "Kendrick", 22, "male",1, 20000));
             }
         };
     }

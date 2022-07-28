@@ -18,16 +18,16 @@ public class CompanyRepository {
 
         List<Employee> employeeList1 = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male", 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male", 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female", 20000));
+                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
             }
         };
         List<Employee> employeeList2 = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Laughing", 22, "male", 20000));
-                add(new Employee(2, "Kendraxxxxick", 12, "male", 30000));
-                add(new Employee(3, "Laughinggggg", 22, "female", 20000));
+                add(new Employee(1, "Laughing", 22, "male",1, 20000));
+                add(new Employee(2, "Kendraxxxxick", 12, "male",1, 30000));
+                add(new Employee(3, "Laughinggggg", 22, "female",1, 20000));
             }
         };
 

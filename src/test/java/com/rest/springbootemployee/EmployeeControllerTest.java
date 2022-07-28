@@ -2,17 +2,14 @@ package com.rest.springbootemployee;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.EmployeeNotFoundException;
-import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -34,12 +31,13 @@ public class EmployeeControllerTest {
     @BeforeEach
     public void cleanDB() {
         jpaEmployeeRepository.deleteAll();
+        jpaEmployeeRepository.flush();
     }
 
     @Test
     public void should_return_employees_when_getAllEmployees() throws Exception {
-        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
-        jpaEmployeeRepository.save(new Employee(2, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male",1, 20000));
+        jpaEmployeeRepository.save(new Employee(2, "Kendrick", 22, "male",1, 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -70,7 +68,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_when_getEmployeeByID_given_id() throws Exception {
-        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male",1, 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -93,9 +91,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_when_put_employee_given_id_employee() throws Exception {
-        jpaEmployeeRepository.save(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
+        int id = jpaEmployeeRepository.save(new Employee(1, "Kendraxxxxick", 22, "male",1, 20000)).getId();
 
-        int id = 1;
         String employee = "{\n" +
                 "                \"id\": 1,\n" +
                 "                \"name\": \"Kendraxxxxick\",\n" +
@@ -104,7 +101,7 @@ public class EmployeeControllerTest {
                 "                \"salary\": 9999\n" +
                 "            }";
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/employees/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}" , id)
                         .contentType(MediaType.APPLICATION_JSON).content(employee))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Kendraxxxxick"))
@@ -135,8 +132,8 @@ public class EmployeeControllerTest {
     @Test
     public void should_return_is_no_content_when_delete_employee_given_id() throws Exception {
 
-        int id = 1;
-        jpaEmployeeRepository.save(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
+        int id ;
+        id=jpaEmployeeRepository.saveAndFlush(new Employee(1, "Kendraxxxxick", 22, "male",1, 20000)).getId();
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
@@ -144,8 +141,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employees_by_page_when_getEmployees_by_page() throws Exception {
-        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
-        jpaEmployeeRepository.save(new Employee(2, "Kendrick", 12, "female", 20500));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male",1, 20000));
+        jpaEmployeeRepository.save(new Employee(2, "Kendrick", 12, "female",1, 20500));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees?page=1&pageSize=1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -154,7 +151,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employee_when_getEmployeeByGender_given_gender() throws Exception {
-        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male",1, 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender=male"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

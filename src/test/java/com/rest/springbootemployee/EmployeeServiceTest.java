@@ -37,7 +37,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_all_employees_when_find_all_given_employees() {
 
-        Employee employee = new Employee(1, "Kendrick", 22, "male", 20000);
+        Employee employee = new Employee(1, "Kendrick", 22, "male",1, 20000);
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(employee);
 
@@ -51,8 +51,8 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_updated_employee_when_update_given_employee() {
         int newSalary = 1999;
-        Employee originEmployee = new Employee(1, "laughing", 22, "male", 80000);
-        Employee toUpdateEmployee = new Employee(1, "laughing", 22, "male", newSalary);
+        Employee originEmployee = new Employee(1, "laughing", 22, "male",1, 80000);
+        Employee toUpdateEmployee = new Employee(1, "laughing", 22, "male",1, newSalary);
 
         given(jpaEmployeeRepository.findById(1)).willReturn(Optional.of(originEmployee));
 
@@ -65,7 +65,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employee_when_get_employee_by_id_given_id() {
         int id = 1;
-        Employee employee = new Employee(id, "Kendrick", 22, "male", 20000);
+        Employee employee = new Employee(id, "Kendrick", 22, "male",1, 20000);
 
         given(jpaEmployeeRepository.findById(id)).willReturn(Optional.of(employee));
 
@@ -77,7 +77,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_return_employee_when_create_employee_given_new_employee() {
-        Employee employee = new Employee(1, "Kendrick", 22, "male", 20000);
+        Employee employee = new Employee(1, "Kendrick", 22, "male",1, 20000);
         given(jpaEmployeeRepository.save(employee)).willReturn(employee);
 
         Employee employee2 = employeeService.addAEmployee(employee);
@@ -86,7 +86,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_return_employee_when_getEmployeeByGender_given_gender() {
-        Employee employee = new Employee(0, "Kendrick", 22, "male", 20000);
+        Employee employee = new Employee(0, "Kendrick", 22, "male",1, 20000);
         List<Employee> employees = new ArrayList<>();
         employees.add(employee);
         String gender = "male";
@@ -100,8 +100,8 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_return_employees_by_page_when_getEmployees_by_page() {
-        Employee employee1 = new Employee(1, "Kendrick", 22, "male", 20000);
-        Employee employee2 = new Employee(2, "Kendrick", 22, "male", 20000);
+        Employee employee1 = new Employee(1, "Kendrick", 22, "male",1, 20000);
+        Employee employee2 = new Employee(2, "Kendrick", 22, "male",1, 20000);
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(employee1);
         employeeList.add(employee2);
