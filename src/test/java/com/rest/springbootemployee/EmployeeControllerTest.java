@@ -3,6 +3,7 @@ package com.rest.springbootemployee;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.EmployeeNotFoundException;
 import com.rest.springbootemployee.repository.EmployeeRepository;
+import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,23 @@ public class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private JpaEmployeeRepository jpaEmployeeRepository;
+
     @BeforeEach
     public void cleanDB() {
         employeeRepository.cleanAll();
+        jpaEmployeeRepository.deleteAll();
     }
 
     @Test
     public void should_return_employees_when_getAllEmployees() throws Exception {
-        employeeRepository.addAEmployee(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(2, "Kendrick", 22, "male", 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Kendrick"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
@@ -137,8 +143,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_employees_by_page_when_getEmployees_by_page() throws Exception {
-        employeeRepository.addAEmployee(new Employee(1, "Kendrick", 22, "male", 20000));
-        employeeRepository.addAEmployee(new Employee(2, "Kendrick", 12, "female", 20500));
+        jpaEmployeeRepository.save(new Employee(1, "Kendrick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(2, "Kendrick", 12, "female", 20500));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/employees?page=1&pageSize=1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

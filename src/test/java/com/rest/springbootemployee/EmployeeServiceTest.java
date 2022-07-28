@@ -2,12 +2,16 @@ package com.rest.springbootemployee;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.EmployeeRepository;
+import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import com.rest.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -24,11 +28,14 @@ import static org.mockito.Mockito.verify;
 public class EmployeeServiceTest {
 
     //    @Mock
-    @Spy
+    @Mock
     private EmployeeRepository employeeRepository;
 
     @InjectMocks
     private EmployeeService employeeService;
+
+    @Mock
+    private JpaEmployeeRepository jpaEmployeeRepository;
 
     @Test
     public void should_return_all_employees_when_find_all_given_employees() {
@@ -37,7 +44,7 @@ public class EmployeeServiceTest {
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(employee);
 
-        given(employeeRepository.getAllEmployee()).willReturn(employeeList);
+        given(jpaEmployeeRepository.findAll()).willReturn(employeeList);
 
         List<Employee> employees = employeeService.getAllEmployee();
 
@@ -99,15 +106,18 @@ public class EmployeeServiceTest {
 
     @Test
     public void should_return_employees_by_page_when_getEmployees_by_page() {
-        Employee employee = new Employee(1, "Kendrick", 22, "male", 20000);
+        Employee employee1 = new Employee(1, "Kendrick", 22, "male", 20000);
+        Employee employee2 = new Employee(2, "Kendrick", 22, "male", 20000);
         List<Employee> employeeList = new ArrayList<>();
-        employeeList.add(employee);
-        int page = 1, pageSize = 1;
-        given(employeeRepository.getEmployeeByPage(page,pageSize)).willReturn(employeeList);
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        int page = 1, pageSize = 2;
+        Pageable pageObj= PageRequest.of(page, pageSize);
+        given(jpaEmployeeRepository.findAll(pageObj)).willReturn(new PageImpl<>(employeeList));
 
         List<Employee> employees = employeeService.getEmployeeByPage(page,pageSize);
 
-        assertThat(employees.get(0),equalTo(employee) );
+        assertThat(employees,hasSize(2) );
     }
 
     @Test
