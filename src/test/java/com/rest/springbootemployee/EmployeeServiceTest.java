@@ -126,6 +126,6 @@ public class EmployeeServiceTest {
     public void should_return_is_no_content_when_delete_employee_given_id(){
         int id=1;
         employeeService.deleteEmployee(id);
-        verify(employeeRepository).deleteEmployee(id);
+        verify(jpaEmployeeRepository).deleteById(id);
     }
 }

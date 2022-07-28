@@ -46,6 +46,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(int id) {
-        employeeRepository.deleteEmployee(id);
+        jpaEmployeeRepository.deleteById(id);
     }
 }

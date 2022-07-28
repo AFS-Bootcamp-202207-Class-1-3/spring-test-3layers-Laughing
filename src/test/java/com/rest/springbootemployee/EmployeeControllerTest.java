@@ -139,7 +139,7 @@ public class EmployeeControllerTest {
     public void should_return_is_no_content_when_delete_employee_given_id() throws Exception {
 
         int id = 1;
-        employeeRepository.addAEmployee(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
+        jpaEmployeeRepository.save(new Employee(1, "Kendraxxxxick", 22, "male", 20000));
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
