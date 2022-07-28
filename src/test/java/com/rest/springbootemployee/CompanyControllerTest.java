@@ -100,17 +100,15 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_company_when_put_company_given_id_company() throws Exception {
-        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
+        Company company=jpaCompanyRepository.save(new Company(1, "hot", new ArrayList<>()));
 
-        int id = 1;
         String newCompany = "{\n" +
                 "        \"id\": 1,\n" +
                 "        \"name\": \"cool\",\n" +
-                "        \"employees\": [\n" +
-                "        ]\n" +
+                "        \"employees\": []\n" +
                 "    }";
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/companies/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/companies/{id}" , company.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(newCompany))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("cool"));

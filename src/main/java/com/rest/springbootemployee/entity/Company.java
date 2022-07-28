@@ -49,6 +49,5 @@ public class Company {
 
     public void merge(Company company) {
         this.name=company.name;
-        this.employees=company.employees;
     }
 }

@@ -41,9 +41,9 @@ public class CompanyServiceTest {
 
         List<Employee> employeeList = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
+                add(new Employee(1, "Kendrick", 22, "male", 1, 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male", 1, 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female", 1, 20000));
             }
         };
         Company company = new Company(1, "cool", employeeList);
@@ -66,7 +66,7 @@ public class CompanyServiceTest {
 
         given(jpaCompanyRepository.findById(id)).willReturn(Optional.of(company));
 
-       Company findCompany=companyService.getCompanyByID(id);
+        Company findCompany = companyService.getCompanyByID(id);
 
         assertThat(company, equalTo(findCompany));
 
@@ -78,11 +78,11 @@ public class CompanyServiceTest {
         List<Company> companyList = new ArrayList<>();
         companyList.add(company);
         int page = 1, pageSize = 1;
-        given(jpaCompanyRepository.findAll(PageRequest.of(page,pageSize))).willReturn(new PageImpl<>(companyList));
+        given(jpaCompanyRepository.findAll(PageRequest.of(page, pageSize))).willReturn(new PageImpl<>(companyList));
 
-        List<Company> companies = companyService.getCompanyByPage(page,pageSize);
+        List<Company> companies = companyService.getCompanyByPage(page, pageSize);
 
-        assertThat(companies.get(0),equalTo(company) );
+        assertThat(companies.get(0), equalTo(company));
     }
 
     @Test
@@ -102,37 +102,35 @@ public class CompanyServiceTest {
         Company toUpdateCompany = new Company(1, newName, new ArrayList<>());
 
 
-        given(companyRepository.getCompanyByID(1)).willReturn(originCompany);
+        given(jpaCompanyRepository.findById(1)).willReturn(Optional.of(originCompany));
 
-        given(companyRepository.updateCompany(1, toUpdateCompany)).willCallRealMethod();
+        companyService.update(1, toUpdateCompany);
 
-        Company updateCompany = companyService.update(1, toUpdateCompany);
-
-        verify(companyRepository).updateCompany(1, originCompany);
+        verify(jpaCompanyRepository).save(originCompany);
 
     }
 
     @Test
-    public void should_return_is_no_content_when_delete_company_given_id(){
-        int id=1;
+    public void should_return_is_no_content_when_delete_company_given_id() {
+        int id = 1;
         companyService.deleteCompany(id);
         verify(companyRepository).deleteCompany(id);
     }
 
     @Test
-    public void should_return_employees_when_get_company_employees_given_company_id(){
-        int companyID=1;
+    public void should_return_employees_when_get_company_employees_given_company_id() {
+        int companyID = 1;
         List<Employee> employeeList = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
-                add(new Employee(2, "Kenssdrick", 12, "male",1, 30000));
-                add(new Employee(3, "Kenddxrick", 22, "female",1, 20000));
+                add(new Employee(1, "Kendrick", 22, "male", 1, 20000));
+                add(new Employee(2, "Kenssdrick", 12, "male", 1, 30000));
+                add(new Employee(3, "Kenddxrick", 22, "female", 1, 20000));
             }
         };
 
         given(companyRepository.getCompanyEmployeesByID(companyID)).willReturn(employeeList);
-        List<Employee> employees=companyService.getCompanyEmployeesByID(companyID);
+        List<Employee> employees = companyService.getCompanyEmployeesByID(companyID);
 
-        assertThat(employees,hasSize(3));
+        assertThat(employees, hasSize(3));
     }
 }

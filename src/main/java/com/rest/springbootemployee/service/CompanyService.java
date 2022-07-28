@@ -37,9 +37,9 @@ public class CompanyService {
     }
 
     public Company update(int id, Company toUpdateCompany) {
-        Company company=companyRepository.getCompanyByID(id);
+        Company company=jpaCompanyRepository.findById(id).orElseThrow(CompanyNotFoundException::new);
         company.merge(toUpdateCompany);
-        return companyRepository.updateCompany(id,company);
+        return jpaCompanyRepository.save(company);
     }
 
     public void deleteCompany(int id) {
