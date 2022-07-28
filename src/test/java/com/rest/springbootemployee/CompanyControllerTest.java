@@ -6,6 +6,8 @@ import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.repository.JpaCompanyRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -37,10 +39,12 @@ public class CompanyControllerTest {
     private JpaEmployeeRepository jpaEmployeeRepository;
 
     @BeforeEach
+    @AfterEach
     public void cleanDB() {
         jpaEmployeeRepository.deleteAll();
         jpaCompanyRepository.deleteAll();
     }
+
 
     @Test
     public void should_return_all_companies_when_find_all_given_companies() throws Exception {
