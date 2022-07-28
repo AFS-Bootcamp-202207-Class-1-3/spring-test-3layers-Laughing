@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class CompanyControllerTest {
     @Autowired
     private CompanyRepository companyRepository;
@@ -72,8 +74,8 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_companies_by_page_when_getCompanies_by_page() throws Exception {
-        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
-        companyRepository.addCompany(new Company(1, "cool", new ArrayList<>()));
+        jpaCompanyRepository.save(new Company(1, "cool", new ArrayList<>()));
+        jpaCompanyRepository.save(new Company(2, "cool", new ArrayList<>()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/companies?page=1&pageSize=1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

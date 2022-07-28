@@ -6,6 +6,7 @@ import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.repository.JpaCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompanyByPage(int page, int pageSize) {
-        return companyRepository.getCompaniesByPage(page,pageSize);
+        return jpaCompanyRepository.findAll(PageRequest.of(page,pageSize)).toList();
     }
 
     public Integer addCompany(Company company) {
