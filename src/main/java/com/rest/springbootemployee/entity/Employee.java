@@ -17,6 +17,7 @@ public class Employee{
     private String gender;
 
     private int companyId;
+    private int salary;
 
     public Employee() {
     }
@@ -70,7 +71,6 @@ public class Employee{
         return salary;
     }
 
-    private int salary;
 
     public void merge(Employee employee) {
         this.name=employee.getName();

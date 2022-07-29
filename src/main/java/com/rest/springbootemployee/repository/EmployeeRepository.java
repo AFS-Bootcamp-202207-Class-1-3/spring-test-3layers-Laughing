@@ -16,12 +16,12 @@ public class EmployeeRepository {
     public EmployeeRepository() {
         employeeRepository = new ArrayList<Employee>() {
             {
-                add(new Employee(1, "Kendrick", 22, "male",1, 20000));
-                add(new Employee(2, "Kendrick", 22, "male",1, 20000));
-                add(new Employee(3, "Kendrick", 22, "female",1, 20000));
-                add(new Employee(4, "Kendrick", 22, "male",1, 50000));
-                add(new Employee(5, "Kendrick", 22, "female",1, 30000));
-                add(new Employee(6, "Kendrick", 22, "male",1, 20000));
+                add(new Employee(1, "Kendrick", 22, "male", 1, 20000));
+                add(new Employee(2, "Kendrick", 22, "male", 1, 20000));
+                add(new Employee(3, "Kendrick", 22, "female", 1, 20000));
+                add(new Employee(4, "Kendrick", 22, "male", 1, 50000));
+                add(new Employee(5, "Kendrick", 22, "female", 1, 30000));
+                add(new Employee(6, "Kendrick", 22, "male", 1, 20000));
             }
         };
     }
@@ -34,7 +34,7 @@ public class EmployeeRepository {
         return employeeRepository.stream().
                 filter(employee -> employee.getId() == id).
                 findFirst().
-                orElseThrow(()->new EmployeeNotFoundException());
+                orElseThrow(() -> new EmployeeNotFoundException());
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
@@ -44,7 +44,7 @@ public class EmployeeRepository {
     }
 
     public Integer addAEmployee(Employee employee) {
-        int newId=generateMaxId();
+        int newId = generateMaxId();
         employee.setId(newId);
         employeeRepository.add(employee);
         return newId;
@@ -68,7 +68,7 @@ public class EmployeeRepository {
     }
 
     public void deleteEmployee(int id) {
-        Employee employee=findById(id);
+        Employee employee = findById(id);
         employeeRepository.remove(employee);
     }
 

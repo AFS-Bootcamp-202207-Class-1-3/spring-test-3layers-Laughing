@@ -27,7 +27,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompanyByPage(int page, int pageSize) {
-        return jpaCompanyRepository.findAll(PageRequest.of(page,pageSize)).toList();
+        return jpaCompanyRepository.findAll(PageRequest.of(page, pageSize)).toList();
     }
 
     public Company addCompany(Company company) {
@@ -35,7 +35,7 @@ public class CompanyService {
     }
 
     public Company update(int id, Company toUpdateCompany) {
-        Company company=jpaCompanyRepository.findById(id).orElseThrow(CompanyNotFoundException::new);
+        Company company = jpaCompanyRepository.findById(id).orElseThrow(CompanyNotFoundException::new);
         company.merge(toUpdateCompany);
         return jpaCompanyRepository.save(company);
     }

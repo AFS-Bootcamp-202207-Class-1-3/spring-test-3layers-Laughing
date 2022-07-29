@@ -39,7 +39,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByPage(int page, int pageSize) {
-        return jpaEmployeeRepository.findAll(PageRequest.of(page,pageSize)).toList();
+        return jpaEmployeeRepository.findAll(PageRequest.of(page, pageSize)).toList();
     }
 
     public void deleteEmployee(int id) {
