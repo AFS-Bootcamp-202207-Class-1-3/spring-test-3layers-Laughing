@@ -18,18 +18,18 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getEmployees() {
-        return employeeService.getAllEmployee();
+    public List<EmployeeResponse> getEmployees() {
+        return EmployeeMapper.entityToResponseList(employeeService.getAllEmployee());
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) {
-        return employeeService.findByID(id);
+    public EmployeeResponse getEmployeeById(@PathVariable Integer id) {
+        return EmployeeMapper.entityToResponse(employeeService.findByID(id));
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> getEmployeesByGender(String gender) {
-        return employeeService.getEmployeesByGender(gender);
+    public List<EmployeeResponse> getEmployeesByGender(String gender) {
+        return EmployeeMapper.entityToResponseList(employeeService.getEmployeesByGender(gender));
     }
 
     @PostMapping
@@ -39,8 +39,8 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
-        return employeeService.getEmployeeByPage(page, pageSize);
+    public List<EmployeeResponse> getEmployeesByPage(Integer page, Integer pageSize) {
+        return EmployeeMapper.entityToResponseList(employeeService.getEmployeeByPage(page, pageSize));
     }
 
     @PutMapping("/{id}")
